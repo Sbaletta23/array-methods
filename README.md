@@ -1,70 +1,177 @@
-# Getting Started with Create React App
+# Práctica de Arrays
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Intro a arrays
 
-## Available Scripts
+Los array sirven para almacenar listas.
+```js
+const items = ['cámara', 'celular', 'reloj']
+```
 
-In the project directory, you can run:
+Esas listas pueden almacenar cualquier tipo de dato y no todos los elementos tienen por que ser del mismo tipo.
+```js
+const weirdItems = ['cámara', 2, 'reloj']
+```
 
-### `npm start`
+Cualquier tipo, incluyendo otros arrays.
+```js
+const extraWeirdItems = ['cámara', 2, 'reloj', [], ['por', 'que', '?']]
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Podemos acceder a sus elementos por índice, los arrays inician desde el índice 0.
+```js
+const numArray = ['cero', 'uno', 'dos']
+numArray[1] // => 'uno'
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Podemos modificar los elementos por índice también
+```js
+numArray[1] = 'one'
+numArray // => [ 'cero', 'one', 'dos' ]
+```
 
-### `npm test`
+Los arrays poseen numerosas propiedades y métodos que podemos usar para interactuar con ellos.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```js
+numArray.length // 3
+numArray.forEach(num => console.log(`número: ${num}`)) // 'número: N'
+```
 
-### `npm run build`
+Algunos de estos métodos suelen usarse para modificar u obtener copias del array, los métodos que modifican el array original se los llaman métodos mutables.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```js
+const mutableArray = [1, 2, 3]
+// Agregar un elemento al final
+mutableArray.push(4)
+// Eliminar el primer elemento
+mutableArray.shift()
+mutableArray // [2, 3, 4]
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Los métodos que devuelven una copia modificada sin modificar el array original, se los llama métodos inmutables.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```js
+const immutableArray = [1, 2, 3]
+// Agregar un elemento al final
+const concatenatedArray = immutableArray.concat(4)
+// Eliminar el primer elemento
+const shiftedArray = immutableArray.slice(1)
+immutableArray // [1, 2, 3]
+concatenatedArray // [1, 2, 3, 4]
+shiftedArray // [2, 3]
+```
 
-### `npm run eject`
+En este ejercicio vamos a estar haciendo cambios a una aplicación React, donde se aconseja no debemos mutar los estados ya que esto puede interferir con el resultado esperado, por ende vamos a centrarnos en algunos de los métodos inmutables como .concat, .filter, .map, .reduce o .some.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Array methods
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# .reduce
+Ejecuta una función reductora sobre cada elemento de un array, devolviendo como resultado un único valor.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```js
+const array1 = [1, 2, 3, 4];
+const initialValue = 0;
 
-## Learn More
+const sumWithInitial = array1.reduce(
+  (previousValue, currentValue) => previousValue + currentValue,
+  initialValue
+);
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+console.log(sumWithInitial);
+// expected output: 10
+```
+El siguiente ejemplo usa reduce() para crear un total de precio por productos comprados.
+```js
+const total = () => {
+    return items.reduce( (acc,item) => {
+      return acc + item.price
+    }, 0);
+  };
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+# .concat
+Se usa para unir dos o más arrays. Este método no cambia los arrays existentes, sino que devuelve un nuevo array.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```js
+const array1 = ['a', 'b', 'c'];
+const array2 = ['d', 'e', 'f'];
+const array3 = array1.concat(array2);
 
-### Analyzing the Bundle Size
+console.log(array3);
+// expected output: Array ["a", "b", "c", "d", "e", "f"]
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+# .map
+ Crea un nuevo array con los resultados de la llamada a la función indicada aplicados a cada uno de sus elementos.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```js
+const numbers = [1, 5, 10, 15];
+const doubles = numbers.map( x => (x * 2));
+;
+// doubles is now [2, 10, 20, 30]
+```
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+# .filter
+Crea un nuevo array con todos los elementos que cumplan la condición implementada por la función dada.
 
-### Deployment
+El siguiente ejemplo usa filter() para crear un array filtrado que excluye todos los elementos con valores inferiores a 10.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```js
+function esSuficientementeGrande(elemento) {
+  return elemento >= 10;
+}
+var filtrados = [12, 5, 8, 130, 44].filter(esSuficientementeGrande);
+// filtrados es [12, 130, 44]
+```
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# .every
+Determina si todos los elementos en el array satisfacen una condición.
+El siguiente ejemplo prueba si todos los elementos de un arreglo son mayores que 10.
+
+```js
+function esSuficientementeGrande(elemento) {
+    return elemento >= 10;
+}
+const array1 = [12, 5, 8, 130, 44].every(esSuficientementeGrande);   // false
+const array2 = [12, 54, 18, 130, 44].every(esSuficientementeGrande); // true
+```
+El siguiente ejemplo prueba si el producto tiene valido todos los atributos,
+si todo se cumple lo valida.
+
+```js
+  const isValid = () => {
+    return items.every((item) => {
+      return item.name && item.status && item.count > 0 && item.price > 0 ;
+    });
+  };
+  ```
+
+
+
+# .some
+Comprueba si al menos un elemento del array cumple con la condición implementada por la función proporcionada.
+El siguiente ejemplo verifica si algún elemento del array es mayor a 10.
+
+```js
+function isBiggerThan10(element, index, array) {
+  return element > 10;
+}
+[2, 5, 8, 1, 4].some(isBiggerThan10);  // false
+[12, 5, 8, 1, 4].some(isBiggerThan10); // true
+```
+
+El siguiente ejemplo comprueba si el producto posee alguno de todos los atributos,
+si todo se cumple lo valida, pero en este caso lo negamos para que sea isInvalid
+```js
+  const isInvalid = () => {
+    return !items.some((item) => {
+      return !item.name || !item.status || item.count < 0 || item.price < 0 ;
+    });
+  };
+  ```
+
+
